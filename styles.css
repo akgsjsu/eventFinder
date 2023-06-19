@@ -1,0 +1,19 @@
+/* Custom CSS */
+
+* {
+	margin: 3px;
+	padding: 0px;
+}
+
+body {
+	background:#F0F0F0	;
+	font-family: Georgia, Times, serif;
+	color: #000;
+	text-align: center;
+	font-size: 15px;
+}
+input[id="otherLocation"]
+{
+	margin-left: 437px
+}
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Events Search</title>
+		<link href="styles.css" rel="stylesheet">
+	</head>
+	
+	<body>
+		<form>
+			<fieldset>
+				<h1>Events Search</h1>
+
+				<div>
+					<label for="keyword">Keyword</label>
+					<input type="text" id="keyword" required />
+				</div>
+				<div>
+					<label for="category">Category</label>
+					<select name="category" id="category">
+						<option value="default">Default</option>
+						<option value="Music">Music</option>
+						<option value="Sports">Sports</option>
+						<option value="Arts & Theatre">Arts & Theatre</option>
+						<option value="Film">Film</option>
+						<option value="Miscellaneous">Miscellaneous</option>
+					</select>
+				</div>
+			
+				<div>
+					<label for="distance">Distance (miles)</label>
+					<input type="number" id="distance" placeholder="10" name="dist" required />
+					
+					<input type="radio" name="location" id="here" value="Here" checked> Here<br>
+					<input type="radio" name="location" id="otherLocation" value=""> <input type="text" id ="location_id" placeholder="location">
+				</div>
+			
+				<button type="submit" onclick=submit_form()>Search</button>
+				<input type="reset" value="Clear">
+			</fieldset>
+		</form>
+		
+		<p id="demo"></p>
+		<script>
+			function submit_form(){
+				var xhr = new XMLHttpRequest();
+
+				//xhr.onreadystatechange=function(){
+				var keyword_val=document.getElementById("keyword").value;
+				var category_val=document.getElementById("category").value;
+				var distance_val=document.getElementById("distance").value;
+				
+				if (document.getElementById("here").checked)
+				{
+					var location_val=document.getElementById("here").value;
+				}
+				else 
+				{
+					var location_val=document.getElementById("location_id").value;
+				}
+				//document.getElementById("demo").innerHTML = keyword.value+category.value+distance.value+location.value;
+				//};
+				let url = new URL('http://192.168.0.103:5009/events');
+				url.searchParams.set('keyword', keyword_val);
+				url.searchParams.set('category', category_val);
+				url.searchParams.set('distance', distance_val);
+				url.searchParams.set('location', location_val);
+				//params="keyword=keyword_val&category=category_val&distance=distance_val&location=location_val";
+				xhr.open('GET', url, true);
+				xhr.onload = function (e) {
+					if (xhr.readyState === 4) {
+					  if (xhr.status === 200) {
+						const resp=xhr.responseText;
+						const res=JSON.parse(resp);
+						
+						var out="<table>";
+							out+="<thead>" +
+								"<tr><th>"+
+								'Name' +
+								"</th><th>"+
+								'Icon' +
+								"</th><th>"+
+								'Date' +
+								"</th><th>"+
+								'Genre' +
+								"</th><th>"+
+								'Venue' +
+								"</th></tr>"
+							 out+= "</thead>"
+							  
+							for (var i=0;i<res.length;i++){
+								
+								out += "<tr><td>" +
+								res[i].name +
+								"</td><td>" +
+								"<img src="+res[i].icon+" style='display: inline;'  width='40' height='40'>"+
+								"</td><td>" +
+								res[i].date +
+								"</td><td>" +
+								res[i].genre +
+								"</td><td>" +
+								res[i].venue +
+								"</td></tr>";
+							}
+						out += "</table>";
+      					document.getElementById("demo").innerHTML = out;
+
+						/*
+						function getVenues(data) {
+							window.location.href = "table.html";
+							venues = [];
+							
+							for (var i = 0; i < data.length; i++) {
+								venues.push(data[i].name);	
+							}
+							return venues;
+						};
+						
+						venues = getVenues(res);
+						console.log(venues);
+						document.getElementById("demo").innerHTML =venues*/
+						//console.log(xhr.responseText);
+					  } else {
+						document.getElementById("demo").innerHTML = "No Data Found";
+					  }
+					}
+				  };
+				  xhr.onerror = function (e) {
+					document.getElementById("demo").innerHTML = "No Data Found";
+				  };
+				xhr.send(null);
+				//alert(url)
+			}
+		</script>
+		
+	</body>
+</html>
