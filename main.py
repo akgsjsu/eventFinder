@@ -18,15 +18,13 @@ CORS(app)
 def get_events():
     geo_point = '9q5cs'
     unit = 'miles'
-    apikey = 'HjtY5AvPlHPIj1qbcxAtx7b5CYppuoD3'
-    # inputs G
-    # address = 'University of Southern California'
-    # key = 'AIzaSyAw6H3j8oQ_-EkISMUUTknJ-lZvw7Cptug'
-    # g_par = {'address': address, 'key': key}
+    apikey = 'EnterYourKey'
+    
     all_args = request.args.to_dict()
     keyword = all_args.get('keyword')
     radius = all_args.get('distance')
     category = all_args.get('category')
+    
     if category == "Music":
         segment_id = "KZFzniwnSyZfZ7v7nJ"
     if category == "Sports":
