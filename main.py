@@ -26,15 +26,15 @@ def get_events():
     category = all_args.get('category')
     
     if category == "Music":
-        segment_id = "KZFzniwnSyZfZ7v7nJ"
+        segment_id = "key"
     if category == "Sports":
-        segment_id = "KZFzniwnSyZfZ7v7nE"
+        segment_id = "key"
     if category == "Arts & Theatre":
-        segment_id = "KZFzniwnSyZfZ7v7na"
+        segment_id = "key"
     if category == "Film":
-        segment_id = "KZFzniwnSyZfZ7v7nn"
+        segment_id = "key"
     if category == "Miscellaneous":
-        segment_id = "KZFzniwnSyZfZ7v7n1"
+        segment_id = "key"
     if category == "default":
         segment_id = ""
     par = {'apikey': apikey, 'geo_point': geo_point, 'radius': radius, 'segment_id': segment_id, 'unit': unit,
